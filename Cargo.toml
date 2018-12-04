@@ -1,0 +1,11 @@
+[package]
+name = "AoC"
+version = "0.1.0"
+authors = ["cameronreid"]
+
+[dependencies]
+csv='*'
+serde='*'
+serde_derive='*'
+clap='*'
+fine_grained='*'
