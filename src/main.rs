@@ -1,10 +1,12 @@
 extern crate csv;
+extern crate itertools;
 #[macro_use]
 extern crate serde_derive;
 extern crate clap;
 extern crate fine_grained;
 
 pub mod day1;
+pub mod day2;
 
 use std::io;
 use std::collections::HashSet;
@@ -12,6 +14,7 @@ use std::convert::From;
 use clap::{Arg,App};
 use fine_grained::Stopwatch;
 use day1::{Change,ChangeRecord,ChangeList};
+use day2::{BoxID};
 
 
 fn process(day:i32, part:i32) -> i32 {
@@ -29,15 +32,24 @@ fn process(day:i32, part:i32) -> i32 {
 				2 => cl.first_dup(),
 				_ => panic!("Invalid part")
 			}
+		},
+		2 => {
+			let input:Vec<BoxID> = rdr.deserialize().map(|v| v.unwrap()).collect();
+
+			match part {
+				1 => {
+					let twos:Vec<BoxID> = input.clone().into_iter().filter(|x| x.exactly_n(2)).collect();
+					let threes:Vec<BoxID> = input.clone().into_iter().filter(|x| x.exactly_n(3)).collect();
+
+					(twos.len() * threes.len()) as i32
+				},
+
+				2 => unimplemented!(),
+				_ => panic!("Invalid part")
+			}
 		}
 		_ => unimplemented!()
 	}
-
-	/*if part == 1 {
-		cl.result()
-	} else {
-		cl.first_dup()
-	}*/
 }
 
 fn main() {
